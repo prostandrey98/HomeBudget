@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Будущие расходы</title>
-    <link rel="stylesheet" href="/css/style.css?v=6">
+    <link rel="stylesheet" href="/css/style.css?v=8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -18,49 +18,42 @@
         </div>
         <div th:if="${futureExpenses != null and !futureExpenses.isEmpty()}" class="future-expenses-list">
             <div th:each="expense : ${futureExpenses}" class="expense-card">
-                <div class="expense-header">
-                    <div class="expense-title-wrapper">
-                        <i th:class="'fas fa-' + ${expense.category == 'food' ? 'apple-alt' :
-                                                    expense.category == 'housing' ? 'home' :
-                                                    expense.category == 'entertainment' ? 'gamepad' :
-                                                    expense.category == 'children' ? 'baby' :
-                                                    expense.category == 'car' ? 'car' :
-                                                    expense.category == 'clothing' ? 'tshirt' : 'question'}" class="category-icon"></i>
-                        <h3 class="expense-title" th:text="${expense.title != null} ? ${expense.title} : 'Без названия'"></h3>
-                    </div>
-                    <div class="expense-price-wrapper">
+                <div class="expense-content">
+                    <i th:class="'fas fa-' + ${expense.category == 'food' ? 'apple-alt' :
+                                                expense.category == 'housing' ? 'home' :
+                                                expense.category == 'entertainment' ? 'gamepad' :
+                                                expense.category == 'children' ? 'baby' :
+                                                expense.category == 'car' ? 'car' :
+                                                expense.category == 'clothing' ? 'tshirt' : 'question'}"
+                       th:title="${@indexController.formatCategory(expense.category)}"
+                       class="category-icon"></i>
+                    <h3 class="expense-title" th:text="${expense.title != null} ? ${expense.title} : 'Без названия'"></h3>
+                    <span th:if="${expense.recurring and expense.frequency != null}" class="expense-frequency">
+                            <span th:text="' (' + ${@indexController.formatFrequency(expense.frequency).toLowerCase()} + ')'"></span>
+                        </span>
+                    <i th:if="${expense.importance != null and expense.importance == 'important'}"
+                       class="fas fa-exclamation-triangle importance-icon" title="Важно"></i>
+                    <i th:if="${expense.urgency != null and expense.urgency == 'urgent'}"
+                       class="fas fa-clock urgency-icon" title="Срочно"></i>
+                    <div class="expense-right">
                         <span class="expense-price" th:text="${expense.estimatedCost != null} ? ${#numbers.formatDecimal(expense.estimatedCost, 1, 2, 'COMMA')} + ' BYN' : '0,00 BYN'"></span>
-                    </div>
-                </div>
-                <div class="expense-footer">
-                    <div class="expense-details">
-                        <span th:if="${expense.urgency != 'urgent' and expense.importance != 'important' and !expense.recurring}">-</span>
-                        <span th:if="${expense.urgency == 'urgent' or expense.importance == 'important' or expense.recurring}">
-                                <span th:text="${@indexController.formatCategory(expense.category)}"></span>
-                                <span th:if="${expense.urgency != null and expense.urgency == 'urgent'}">, срочно</span>
-                                <span th:if="${expense.importance != null and expense.importance == 'important'}">, важно</span>
-                                <span th:if="${expense.recurring and expense.frequency != null}">
-                                    <span>, </span>
-                                    <span th:text="${@indexController.formatFrequency(expense.frequency).toLowerCase()}"></span>
-                                </span>
-                            </span>
-                    </div>
-                    <div class="action-buttons">
-                        <form th:if="${expense.id != null}" th:action="@{/mark-as-purchased/{id}(id=${expense.id})}" method="post" style="display:inline;">
-                            <button type="submit" class="action-button purchased-button button_future_expenses" title="Куплено">
-                                <i class="fas fa-check"></i>
-                            </button>
-                        </form>
-                        <form th:if="${expense.id != null}" th:action="@{/edit-future-expense/{id}(id=${expense.id})}" method="get" style="display:inline;">
-                            <button type="submit" class="action-button edit-button button_future_expenses" title="Изменить">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </form>
-                        <form th:if="${expense.id != null}" th:action="@{/delete-future-expense/{id}(id=${expense.id})}" method="post" style="display:inline;">
-                            <button type="submit" class="action-button delete-button button_future_expenses" title="Удалить">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </form>
+                        <div class="action-buttons">
+                            <form th:if="${expense.id != null}" th:action="@{/mark-as-purchased/{id}(id=${expense.id})}" method="post" style="display:inline;">
+                                <button type="submit" class="action-button purchased-button button_future_expenses" title="Куплено">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </form>
+                            <form th:if="${expense.id != null}" th:action="@{/edit-future-expense/{id}(id=${expense.id})}" method="get" style="display:inline;">
+                                <button type="submit" class="action-button edit-button button_future_expenses" title="Изменить">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </form>
+                            <form th:if="${expense.id != null}" th:action="@{/delete-future-expense/{id}(id=${expense.id})}" method="post" style="display:inline;">
+                                <button type="submit" class="action-button delete-button button_future_expenses" title="Удалить">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

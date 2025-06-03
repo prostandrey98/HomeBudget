@@ -25,6 +25,7 @@ main {
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    padding-bottom: 120px; /* Увеличиваем нижний padding, чтобы кнопка "+" не перекрывала карточку */
 }
 
 footer {
@@ -51,7 +52,7 @@ footer {
 .add-button {
     position: fixed;
     right: 20px;
-    bottom: 80px; /* Подняли кнопку выше футера */
+    bottom: 80px;
     width: 60px;
     height: 60px;
     background-color: #4CAF50;
@@ -123,60 +124,48 @@ footer {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.expense-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10px;
-}
-
-.expense-title-wrapper {
+.expense-content {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.category-icon {
-    font-size: 20px;
+.category-icon,
+.importance-icon,
+.urgency-icon {
+    font-size: 24px; /* Увеличиваем размер значков (было 20px) */
     color: #666;
 }
 
 .expense-title {
-    font-size: 18px;
+    font-size: 22px; /* Увеличиваем размер названия (было 18px) */
     font-weight: bold;
     margin: 0;
     color: #333;
 }
 
-.expense-price-wrapper {
+.expense-frequency {
+    font-size: 22px; /* Делаем шрифт таким же, как у названия */
+    font-weight: bold; /* Соответствует .expense-title */
+    color: #333; /* Соответствует .expense-title */
+}
+
+.expense-right {
+    margin-left: auto;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
+    gap: 10px;
 }
 
 .expense-price {
-    font-size: 18px;
+    font-size: 22px; /* Увеличиваем размер стоимости (было 18px) */
     font-weight: bold;
     color: #333;
-}
-
-.expense-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.expense-details {
-    font-size: 14px;
-    color: #666;
-    text-align: left;
-    margin: 0;
 }
 
 .action-buttons {
     display: flex;
     gap: 10px;
-    justify-content: flex-end;
 }
 
 .action-button {
@@ -479,17 +468,16 @@ body.dark-theme .expense-card {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-body.dark-theme .category-icon {
+body.dark-theme .category-icon,
+body.dark-theme .importance-icon,
+body.dark-theme .urgency-icon {
     color: #bbb;
 }
 
 body.dark-theme .expense-title,
+body.dark-theme .expense-frequency,
 body.dark-theme .expense-price {
     color: #ddd;
-}
-
-body.dark-theme .expense-details {
-    color: #bbb;
 }
 
 body.dark-theme .purchased-button {
