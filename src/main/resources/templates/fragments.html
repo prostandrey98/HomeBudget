@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fragments</title>
+</head>
+<body>
+<!-- Фрагмент для header -->
+<div th:fragment="header(pageTitle)">
+    <header>
+        <h1 th:text="${pageTitle} ?: 'Домашний бюджет'"></h1>
+        <a href="/profile" class="profile-icon">
+            <i class="fas fa-user"></i>
+        </a>
+    </header>
+</div>
+
+<!-- Фрагмент для footer -->
+<div th:fragment="footer">
+    <footer>
+        <a href="/finances" class="tab">
+            <i class="fas fa-coins"></i>
+        </a>
+        <a href="/future-expenses" class="tab">
+            <i class="fas fa-star"></i>
+        </a>
+        <a href="/expenses" class="tab">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+        <a href="/settings" class="tab">
+            <i class="fas fa-cog"></i>
+        </a>
+    </footer>
+</div>
+</body>
+</html>

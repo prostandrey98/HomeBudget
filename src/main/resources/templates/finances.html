@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Домашний бюджет</title>
+	<link rel="stylesheet" href="/css/style.css?v=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<div th:replace="~{fragments :: header('Финансы')}"></div>
+
+<main>
+	<!-- Контейнер для содержимого, которое будет скрываться -->
+	<div id="main-content">
+		<!-- Баланс -->
+		<div class="balance-section">
+			<h2>Баланс: <span id="balance">******</span> BYN</h2>
+			<button id="toggle-balance"><i class="fas fa-eye-slash"></i></button>
+		</div>
+
+		<!-- Баланс после платежей -->
+		<div class="balance-after-payments">
+			<h3>После платежей: <span id="balance-after-payments">******</span> BYN</h3>
+		</div>
+
+		<!-- Кнопка-ссылка для истории -->
+		<div class="history-link">
+			<a href="/income-history" class="history-button">История прихода денег</a>
+		</div>
+	</div>
+
+	<!-- Форма для добавления прихода -->
+	<div id="transaction-form" style="display: none;">
+		<form th:action="@{/add-transaction}" method="post">
+			<h3 class="form-title">Приход</h3>
+			<input type="hidden" name="type" value="income"/>
+			<label>Сумма:</label>
+			<input type="number" name="amount" step="0.01" required/>
+			<br>
+			<label>Дата:</label>
+			<input type="date" name="date" th:value="2025-05-30" required/>
+			<br>
+			<button type="submit">Добавить</button>
+			<button type="button" id="cancel-button">Отмена</button>
+		</form>
+	</div>
+
+	<button class="add-button">+</button>
+</main>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

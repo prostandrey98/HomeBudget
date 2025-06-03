@@ -1,0 +1,565 @@
+/* Базовые стили */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
+    background-color: #ddd;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #ddd;
+}
+
+/* Основной контейнер */
+#main-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+/* Кнопка добавления */
+.add-button {
+    position: fixed;
+    right: 20px;
+    bottom: 80px; /* Подняли кнопку выше футера */
+    width: 60px;
+    height: 60px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.add-button:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+/* Иконка профиля */
+.profile-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    color: #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.profile-icon:hover {
+    background-color: #e0e0e0;
+}
+
+/* Вкладки в футере */
+.tab {
+    flex: 1;
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    text-decoration: none;
+}
+
+.tab:hover {
+    color: #4CAF50;
+    cursor: pointer;
+}
+
+/* Стили для карточек будущих расходов */
+.future-expenses-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.expense-card {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.expense-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.expense-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-icon {
+    font-size: 20px;
+    color: #666;
+}
+
+.expense-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.expense-price-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.expense-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.expense-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expense-details {
+    font-size: 14px;
+    color: #666;
+    text-align: left;
+    margin: 0;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.action-button {
+    background: none !important;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease;
+}
+
+.button_future_expenses {
+    padding: 0;
+}
+
+.action-button:hover {
+    transform: scale(1.2);
+}
+
+.purchased-button {
+    color: #4CAF50;
+}
+
+.purchased-button:hover {
+    color: #45a049;
+}
+
+.edit-button {
+    color: #2196F3;
+}
+
+.edit-button:hover {
+    color: #1976D2;
+}
+
+.delete-button {
+    color: #f44336;
+}
+
+.delete-button:hover {
+    color: #d32f2f;
+}
+
+/* Стили для формы */
+#future-expense-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 100%;
+    max-width: 400px;
+}
+
+form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-title {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.form-row.full-width {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.form-row.full-width input {
+    width: 100%;
+}
+
+.form-row label {
+    min-width: 150px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-row select,
+.form-row .radio-group {
+    flex: 1 1 auto;
+}
+
+.form-row #frequency-section {
+    flex: 1 1 auto;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.form-row .frequency-hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.form-row .frequency-visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.radio-group {
+    display: flex;
+    gap: 10px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: auto;
+}
+
+label input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.cost-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.cost-section label {
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+.cost-section input {
+    flex: 1 1 auto;
+    min-width: 150px;
+}
+
+.cost-section .currency {
+    font-weight: bold;
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+form input,
+form select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.form-buttons button {
+    flex: 1;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-buttons button:hover {
+    background-color: #45a049;
+}
+
+#cancel-button {
+    background-color: #f44336;
+}
+
+#cancel-button:hover {
+    background-color: #d32f2f;
+}
+
+/* Стили для переключателя тем */
+.settings-section {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-section label {
+    font-weight: bold;
+}
+
+.theme-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Стили для темной темы */
+body.dark-theme {
+    background-color: #1a1a1a;
+    color: #ddd;
+}
+
+body.dark-theme header {
+    background-color: #2e7d32;
+}
+
+body.dark-theme footer {
+    background-color: #333;
+}
+
+body.dark-theme main {
+    background-color: #1a1a1a;
+}
+
+body.dark-theme .tab {
+    color: #ddd;
+}
+
+body.dark-theme .tab:hover {
+    color: #4CAF50;
+}
+
+body.dark-theme .profile-icon {
+    background-color: #333;
+    color: #ddd;
+}
+
+body.dark-theme .profile-icon:hover {
+    background-color: #444;
+}
+
+body.dark-theme .add-button {
+    background-color: #2e7d32;
+}
+
+body.dark-theme .add-button:hover {
+    background-color: #1b5e20;
+}
+
+body.dark-theme .expense-card {
+    border-color: #444;
+    background-color: #2a2a2a;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .category-icon {
+    color: #bbb;
+}
+
+body.dark-theme .expense-title,
+body.dark-theme .expense-price {
+    color: #ddd;
+}
+
+body.dark-theme .expense-details {
+    color: #bbb;
+}
+
+body.dark-theme .purchased-button {
+    color: #2e7d32;
+}
+
+body.dark-theme .purchased-button:hover {
+    color: #1b5e20;
+}
+
+body.dark-theme .edit-button {
+    color: #42a5f5;
+}
+
+body.dark-theme .edit-button:hover {
+    color: #1e88e5;
+}
+
+body.dark-theme .delete-button {
+    color: #d32f2f;
+}
+
+body.dark-theme .delete-button:hover {
+    color: #b71c1c;
+}
+
+body.dark-theme form {
+    background-color: #333;
+}
+
+body.dark-theme .form-row label,
+body.dark-theme form input,
+body.dark-theme form select {
+    color: #ddd;
+}
+
+body.dark-theme form input,
+body.dark-theme form select {
+    background-color: #444;
+    border-color: #555;
+}
+
+body.dark-theme .cost-section .currency {
+    color: #ddd;
+}
+
+body.dark-theme .form-buttons button {
+    background-color: #2e7d32;
+}
+
+body.dark-theme .form-buttons button:hover {
+    background-color: #1b5e20;
+}
+
+body.dark-theme #cancel-button {
+    background-color: #d32f2f;
+}
+
+body.dark-theme #cancel-button:hover {
+    background-color: #b71c1c;
+}
+
+body.dark-theme .theme-toggle-wrapper span {
+    color: #ddd;
+}
+
+body.dark-theme .slider {
+    background-color: #555;
+}
+
+body.dark-theme input:checked + .slider {
+    background-color: #2e7d32;
+}
