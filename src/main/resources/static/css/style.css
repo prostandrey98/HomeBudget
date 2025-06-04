@@ -133,19 +133,19 @@ footer {
 .category-icon,
 .importance-icon,
 .urgency-icon {
-    font-size: 24px; /* Увеличиваем размер значков (было 20px) */
+    font-size: 20px; /* Увеличиваем размер значков (было 20px) */
     color: #666;
 }
 
 .expense-title {
-    font-size: 22px; /* Увеличиваем размер названия (было 18px) */
+    font-size: 18px; /* Увеличиваем размер названия (было 18px) */
     font-weight: bold;
     margin: 0;
     color: #333;
 }
 
 .expense-frequency {
-    font-size: 22px; /* Делаем шрифт таким же, как у названия */
+    font-size: 18px; /* Делаем шрифт таким же, как у названия */
     font-weight: bold; /* Соответствует .expense-title */
     color: #333; /* Соответствует .expense-title */
 }
@@ -158,7 +158,7 @@ footer {
 }
 
 .expense-price {
-    font-size: 22px; /* Увеличиваем размер стоимости (было 18px) */
+    font-size: 18px; /* Увеличиваем размер стоимости (было 18px) */
     font-weight: bold;
     color: #333;
 }
