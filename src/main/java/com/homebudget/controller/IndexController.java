@@ -2,6 +2,7 @@ package com.homebudget.controller;
 
 import com.homebudget.model.FutureExpense;
 import com.homebudget.model.Transaction;
+import com.homebudget.repository.CategoryRepository;
 import com.homebudget.repository.FutureExpenseRepository;
 import com.homebudget.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ public class IndexController {
 
     @Autowired
     private TransactionRepository transactionRepository;
-
     @Autowired
     private FutureExpenseRepository futureExpenseRepository;
 
@@ -50,47 +50,19 @@ public class IndexController {
         return "redirect:/finances";
     }
 
-    @GetMapping("/future-expenses")
-    public String futureExpenses(Model model) {
-        try {
-            List<FutureExpense> futureExpenses = futureExpenseRepository.findAll();
-            System.out.println("Loaded future expenses: " + futureExpenses);
-            model.addAttribute("futureExpenses", futureExpenses);
-            return "future-expenses";
-        } catch (Exception e) {
-            System.err.println("Error in futureExpenses: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
-    }
-
-    @PostMapping("/add-future-expense")
-    public String addFutureExpense(
-            @RequestParam String title,
-            @RequestParam String category,
-            @RequestParam String urgency,
-            @RequestParam String importance,
-            @RequestParam(required = false) Boolean isRecurring,
-            @RequestParam(required = false) String frequency,
-            @RequestParam double estimatedCost) {
-        // Если isRecurring равно null, устанавливаем false
-        boolean recurring = isRecurring != null ? isRecurring : false;
-        String effectiveFrequency = recurring ? frequency : null;
-
-        // Создаем объект без использования конструктора
-        FutureExpense futureExpense = new FutureExpense();
-        futureExpense.setUrgency(urgency);
-        futureExpense.setImportance(importance);
-        futureExpense.setCategory(category);
-        futureExpense.setRecurring(recurring); // Явно устанавливаем значение
-        futureExpense.setFrequency(effectiveFrequency);
-        futureExpense.setEstimatedCost(estimatedCost);
-        futureExpense.setDate(LocalDate.now());
-        futureExpense.setTitle(title);
-
-        futureExpenseRepository.save(futureExpense);
-        return "redirect:/future-expenses";
-    }
+//    @GetMapping("/future-expenses")
+//    public String futureExpenses(Model model) {
+//        try {
+//            List<FutureExpense> futureExpenses = futureExpenseRepository.findAll();
+//            System.out.println("Loaded future expenses: " + futureExpenses);
+//            model.addAttribute("futureExpenses", futureExpenses);
+//            return "future-expenses";
+//        } catch (Exception e) {
+//            System.err.println("Error in futureExpenses: " + e.getMessage());
+//            e.printStackTrace();
+//            throw e;
+//        }
+//    }
 
     @GetMapping("/edit-future-expense/{id}")
     public String editFutureExpense(@PathVariable Long id, Model model) {
@@ -100,30 +72,30 @@ public class IndexController {
         return "edit-future-expense";
     }
 
-    @PostMapping("/update-future-expense")
-    public String updateFutureExpense(
-            @RequestParam Long id,
-            @RequestParam String title,
-            @RequestParam String category,
-            @RequestParam String urgency,
-            @RequestParam String importance,
-            @RequestParam(required = false) Boolean isRecurring,
-            @RequestParam(required = false) String frequency,
-            @RequestParam double estimatedCost) {
-        FutureExpense expense = futureExpenseRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid expense Id:" + id));
-        expense.setTitle(title);
-        expense.setCategory(category);
-        expense.setUrgency(urgency);
-        expense.setImportance(importance);
-        boolean recurring = isRecurring != null ? isRecurring : false;
-        expense.setRecurring(recurring);
-        expense.setFrequency(recurring ? frequency : null);
-        expense.setEstimatedCost(estimatedCost);
-        expense.setDate(LocalDate.now());
-        futureExpenseRepository.save(expense);
-        return "redirect:/future-expenses";
-    }
+//    @PostMapping("/update-future-expense")
+//    public String updateFutureExpense(
+//            @RequestParam Long id,
+//            @RequestParam String title,
+//            @RequestParam Long categoryId,
+//            @RequestParam String urgency,
+//            @RequestParam String importance,
+//            @RequestParam(required = false) Boolean isRecurring,
+//            @RequestParam(required = false) String frequency,
+//            @RequestParam double estimatedCost) {
+//        FutureExpense expense = futureExpenseRepository.findById(id)
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid expense Id:" + id));
+//        expense.setTitle(title);
+//        expense.setCategoryId(categoryId);
+//        expense.setUrgency(urgency);
+//        expense.setImportance(importance);
+//        boolean recurring = isRecurring != null ? isRecurring : false;
+//        expense.setRecurring(recurring);
+//        expense.setFrequency(recurring ? frequency : null);
+//        expense.setEstimatedCost(estimatedCost);
+//        expense.setDate(LocalDate.now());
+//        futureExpenseRepository.save(expense);
+//        return "redirect:/future-expenses";
+//    }
 
     @PostMapping("/mark-as-purchased/{id}")
     public String markAsPurchased(@PathVariable Long id) {
