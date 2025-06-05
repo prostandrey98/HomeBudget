@@ -213,7 +213,7 @@ footer {
 }
 
 /* Стили для формы */
-#future-expense-form {
+#future-expense-form, #edit-future-expense-form {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -334,7 +334,7 @@ form select {
     margin-top: 10px;
 }
 
-.form-buttons button {
+.form-buttons button, .form-buttons a {
     flex: 1;
     padding: 10px;
     background-color: #4CAF50;

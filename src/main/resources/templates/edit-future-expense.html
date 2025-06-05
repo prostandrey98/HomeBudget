@@ -3,18 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Редактировать расход</title>
-    <link rel="stylesheet" href="/css/style.css?v=1">
+    <title>Будущие расходы</title>
+    <link rel="stylesheet" href="/css/style.css?v=8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-<div th:replace="~{fragments :: header('Редактировать расход')}"></div>
-
-<main>
-    <!-- Форма для редактирования -->
-    <div id="future-expense-form">
-        <form th:action="@{/update-future-expense}" method="post">
-            <input type="hidden" name="id" th:value="${expense.id}"/>
+<div th:replace="~{fragments :: header('Будущие расходы')}"></div>
+<div class="container">
+    <div id="edit-future-expense-form">
+        <form th:action="@{/edit-future-expense/{id}(id=${expense.id})}" method="post">
             <h3 class="form-title">Редактировать расход</h3>
             <div class="form-row full-width">
                 <label>Название:</label>
@@ -22,40 +19,37 @@
             </div>
             <div class="form-row">
                 <label>Категория:</label>
-                <select name="category" required>
-                    <option value="food" th:selected="${expense.category == 'food'}">Еда</option>
-                    <option value="housing" th:selected="${expense.category == 'housing'}">Жилье</option>
-                    <option value="entertainment" th:selected="${expense.category == 'entertainment'}">Развлечения</option>
-                    <option value="children" th:selected="${expense.category == 'children'}">Дети</option>
-                    <option value="car" th:selected="${expense.category == 'car'}">Машина</option>
-                    <option value="clothing" th:selected="${expense.category == 'clothing'}">Вещи</option>
-                    <option value="other" th:selected="${expense.category == 'other'}">Другое</option>
+                <select name="categoryId" required>
+                    <option th:each="cat : ${categories}"
+                            th:value="${cat.id}"
+                            th:text="${cat.displayName}"
+                            th:selected="${expense.category != null and expense.category.id == cat.id}"></option>
                 </select>
             </div>
             <div class="form-row">
                 <div class="radio-group">
-                    <label><input type="radio" name="urgency" value="urgent" th:checked="${expense.urgency == 'urgent'}" required> Срочно</label>
-                    <label><input type="radio" name="urgency" value="not_urgent" th:checked="${expense.urgency == 'not_urgent'}"> Не срочно</label>
+                    <label><input type="radio" name="urgency" value="URGENT" th:checked="${expense.urgency != null and expense.urgency.name() == 'URGENT'}" required> Срочно</label>
+                    <label><input type="radio" name="urgency" value="NOT_URGENT" th:checked="${expense.urgency != null and expense.urgency.name() == 'NOT_URGENT'}" required> Не срочно</label>
                 </div>
             </div>
             <div class="form-row">
                 <div class="radio-group">
-                    <label><input type="radio" name="importance" value="important" th:checked="${expense.importance == 'important'}" required> Важно</label>
-                    <label><input type="radio" name="importance" value="not_important" th:checked="${expense.importance == 'not_important'}"> Не важно</label>
+                    <label><input type="radio" name="importance" value="IMPORTANT" th:checked="${expense.importance != null and expense.importance.name() == 'IMPORTANT'}" required> Важно</label>
+                    <label><input type="radio" name="importance" value="NOT_IMPORTANT" th:checked="${expense.importance != null and expense.importance.name() == 'NOT_IMPORTANT'}" required> Не важно</label>
                 </div>
             </div>
             <div class="form-row">
                 <label>
-                    <input type="checkbox" id="recurring-checkbox" name="isRecurring" th:checked="${expense.recurring}"/>
+                    <input type="checkbox" id="recurring-checkbox" name="isRecurring" value="true" th:checked="${expense.isRecurring}"/>
                     Повторяющийся платеж
                 </label>
-                <div id="frequency-section" th:class="${expense.recurring} ? 'frequency-visible' : 'frequency-hidden'">
-                    <select name="frequency" id="frequency-select" th:disabled="${!expense.recurring}">
-                        <option value="weekly" th:selected="${expense.frequency == 'weekly'}">Еженедельно</option>
-                        <option value="monthly" th:selected="${expense.frequency == 'monthly'}">Ежемесячно</option>
-                        <option value="bimonthly" th:selected="${expense.frequency == 'bimonthly'}">Раз в 2 месяца</option>
-                        <option value="quarterly" th:selected="${expense.frequency == 'quarterly'}">Ежеквартально</option>
-                        <option value="yearly" th:selected="${expense.frequency == 'yearly'}">Ежегодно</option>
+                <div id="frequency-section" th:class="${expense.isRecurring} ? '' : 'frequency-hidden'">
+                    <select name="frequency" id="frequency-select" th:disabled="${!expense.isRecurring}">
+                        <option value="WEEKLY" th:selected="${expense.frequency != null and expense.frequency.name() == 'WEEKLY'}">Еженедельно</option>
+                        <option value="MONTHLY" th:selected="${expense.frequency != null and expense.frequency.name() == 'MONTHLY'}">Ежемесячно</option>
+                        <option value="BIMONTHLY" th:selected="${expense.frequency != null and expense.frequency.name() == 'BIMONTHLY'}">Раз в 2 месяца</option>
+                        <option value="QUARTERLY" th:selected="${expense.frequency != null and expense.frequency.name() == 'QUARTERLY'}">Ежеквартально</option>
+                        <option value="YEARLY" th:selected="${expense.frequency != null and expense.frequency.name() == 'YEARLY'}">Ежегодно</option>
                     </select>
                 </div>
             </div>
@@ -72,10 +66,8 @@
             </div>
         </form>
     </div>
-</main>
-
+</div>
 <div th:replace="~{fragments :: footer}"></div>
-
-<script src="/js/main.js"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

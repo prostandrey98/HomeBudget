@@ -19,6 +19,8 @@ public class FutureExpenseController {
     private FutureExpenseRepository expenseRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private FutureExpenseRepository futureExpenseRepository;
 
     @GetMapping("/future-expenses")
     public String showFutureExpenses(Model model) {
@@ -29,12 +31,20 @@ public class FutureExpenseController {
 
     @GetMapping("/edit-future-expense/{id}")
     public String showEditFutureExpenseForm(@PathVariable Long id, Model model) {
-        FutureExpense expense = expenseRepository.findById(id)
+        FutureExpense expense = futureExpenseRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid expense ID: " + id));
         model.addAttribute("expense", expense);
         model.addAttribute("categories", categoryRepository.findAll());
-        return "future-expenses"; // Используем тот же шаблон
+        return "edit-future-expense"; // Используем тот же шаблон
     }
+
+//    @GetMapping("/edit-future-expense/{id}")
+//    public String editFutureExpense(@PathVariable Long id, Model model) {
+//        FutureExpense expense = futureExpenseRepository.findById(id)
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid expense Id:" + id));
+//        model.addAttribute("expense", expense);
+//        return "edit-future-expenses";
+//    }
 
     // Сохранение изменений
     @PostMapping("/edit-future-expense/{id}")

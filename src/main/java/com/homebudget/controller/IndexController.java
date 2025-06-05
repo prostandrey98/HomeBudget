@@ -64,13 +64,13 @@ public class IndexController {
 //        }
 //    }
 
-    @GetMapping("/edit-future-expense/{id}")
-    public String editFutureExpense(@PathVariable Long id, Model model) {
-        FutureExpense expense = futureExpenseRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid expense Id:" + id));
-        model.addAttribute("expense", expense);
-        return "edit-future-expense";
-    }
+//    @GetMapping("/edit-future-expense/{id}")
+//    public String editFutureExpense(@PathVariable Long id, Model model) {
+//        FutureExpense expense = futureExpenseRepository.findById(id)
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid expense Id:" + id));
+//        model.addAttribute("expense", expense);
+//        return "edit-future-expenses";
+//    }
 
 //    @PostMapping("/update-future-expense")
 //    public String updateFutureExpense(
