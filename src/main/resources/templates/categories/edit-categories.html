@@ -10,14 +10,13 @@
 <div class="container">
     <h2>Редактировать категории</h2>
 
-    <!-- Сообщение об ошибке -->
     <div th:if="${param.error == 'categoryInUse'}" class="error-message">
         Нельзя удалить категорию, которая используется в расходах!
     </div>
 
-    <!-- Форма добавления категории -->
     <h3>Добавить новую категорию</h3>
     <form th:action="@{/categories/add}" th:object="${newCategory}" method="post">
+        <input type="hidden" name="redirect" th:value="${redirect}"/>
         <div class="form-row">
             <label>Название:</label>
             <input type="text" th:field="*{displayName}" required placeholder="Введите название"/>
@@ -34,10 +33,10 @@
         <button type="submit">Добавить</button>
     </form>
 
-    <!-- Список категорий для редактирования/удаления -->
     <h3>Существующие категории</h3>
     <div th:each="cat : ${categories}" class="category-edit">
         <form th:action="@{/categories/update/{id}(id=${cat.id})}" method="post" class="edit-form">
+            <input type="hidden" name="redirect" th:value="${redirect}"/>
             <div class="form-row">
                 <label>Название:</label>
                 <input type="text" name="displayName" th:value="${cat.displayName}" required/>
@@ -54,11 +53,12 @@
             <button type="submit">Сохранить</button>
         </form>
         <form th:action="@{/categories/delete/{id}(id=${cat.id})}" method="post" class="delete-form">
+            <input type="hidden" name="redirect" th:value="${redirect}"/>
             <button type="submit" class="delete-button">Удалить</button>
         </form>
     </div>
 
-    <a th:href="@{/categories}" class="back-link">Назад к списку категорий</a>
+    <a th:href="@{${redirect}}" class="back-link">Назад</a>
 </div>
 <script th:src="@{/js/main.js}"></script>
 </body>

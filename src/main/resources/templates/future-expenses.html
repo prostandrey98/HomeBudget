@@ -67,10 +67,13 @@
             </div>
             <div class="form-row">
                 <label>Категория:</label>
-                <select name="categoryId" required>
+                <select name="categoryId" id="category-select-add" required>
                     <option th:each="cat : ${categories}"
                             th:value="${cat.id}"
                             th:text="${cat.displayName}"></option>
+                    <option value="edit-categories" class="edit-categories-option">
+                        ⋮ Редактировать категории
+                    </option>
                 </select>
             </div>
             <div class="form-row">

@@ -613,3 +613,13 @@ body.dark-theme input:checked + .slider {
     background: #e0e0e0;
     border: 1px solid #333;
 }
+
+.edit-categories-option {
+    color: #888;
+    font-style: italic;
+    padding-left: 20px;
+}
+select#category-select-add, select#category-select-edit {
+    padding: 8px;
+    width: 100%;
+}

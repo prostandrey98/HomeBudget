@@ -167,3 +167,43 @@ if (themeToggle) {
         localStorage.setItem('theme', selectedTheme);
     });
 }
+
+function handleCategorySelect(select, redirectUrl) {
+    if (select) {
+        console.log(`Found select: ${select.id}`); // Отладка
+        select.addEventListener('change', function(e) {
+            console.log(`Select changed: value=${this.value}, redirectUrl=${redirectUrl}}`); // Отладка
+            if (this.value === 'edit-categories') {
+                e.preventDefault(); // Предотвратить стандартное поведение
+                select.removeAttribute('required'); // Отключить валидацию
+                window.location.href = `/categories/edit?redirect=${encodeURIComponent(redirectUrl)}`;
+                this.value = ''; // Сбросить выбор
+                select.setAttribute('required', 'required'); // Восстановить валидацию
+            }
+        });
+    } else {
+        console.error(`Category select not found: ${select ? select.id : 'null'}`);
+    }
+}
+
+// Для формы добавления
+if (categorySelectAdd) {
+    handleCategorySelect(categorySelectAdd, '/future-affairs');
+} else {
+    console.error('category-select-add not found');
+}
+
+// Для формы редактирования
+if (editExpenseForm && categorySelectEdit) {
+    const formAction = editExpenseForm.querySelector('form')?.action;
+    const expenseId = formAction ? formAction.match(/\/edit-future\/expense\/(\d+)$/)?.[1] : '';
+    if (expenseId) {
+        handleCategorySelect(categorySelectEdit, `/edit-future-expense/${expenseId}`);
+    } else {
+        console.error('Expense ID not found in form action');
+        handleCategorySelect(categorySelectEdit, '/future-affairs'); // Fallback
+    }
+} else {
+    console.error('category-select-edit or editExpenseForm not found');
+}
+

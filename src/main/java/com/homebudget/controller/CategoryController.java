@@ -30,10 +30,11 @@ public class CategoryController {
 
     // Отображение формы редактирования категорий
     @GetMapping("/edit")
-    public String showEditCategoriesForm(Model model) {
+    public String showEditCategoriesForm(@RequestParam(required = false, defaultValue = "/categories") String redirect, Model model) {
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("icons", iconRepository.findAll());
         model.addAttribute("newCategory", new Category());
+        model.addAttribute("redirect", redirect);
         return "categories/edit-categories";
     }
 
@@ -42,6 +43,7 @@ public class CategoryController {
     public String addCategory(
             @ModelAttribute("newCategory") @Validated Category newCategory,
             @RequestParam Long iconId,
+            @RequestParam String redirect,
             BindingResult result) {
         if (result.hasErrors()) {
             return "categories/edit-categories";
@@ -49,7 +51,7 @@ public class CategoryController {
         newCategory.setIcon(iconRepository.findById(iconId).orElseThrow());
         newCategory.setName(newCategory.getDisplayName().toUpperCase().replace(" ", "_"));
         categoryRepository.save(newCategory);
-        return "redirect:/categories/edit";
+        return "redirect:" + redirect;
     }
 
     // Редактирование категории
@@ -57,27 +59,28 @@ public class CategoryController {
     public String updateCategory(
             @PathVariable Long id,
             @RequestParam String displayName,
-            @RequestParam Long iconId) {
+            @RequestParam Long iconId,
+            @RequestParam String redirect) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category ID: " + id));
         category.setDisplayName(displayName);
         category.setName(displayName.toUpperCase().replace(" ", "_"));
         category.setIcon(iconRepository.findById(iconId).orElseThrow());
         categoryRepository.save(category);
-        return "redirect:/categories/edit";
+        return "redirect:" + redirect;
     }
 
     // Удаление категории
     @PostMapping("/delete/{id}")
-    public String deleteCategory(@PathVariable Long id) {
+    public String deleteCategory(@PathVariable Long id, @RequestParam String redirect) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category ID: " + id));
         // Проверка, используется ли категория
         if (expenseRepository.countByCategoryId(id) > 0) {
             // Можно добавить сообщение об ошибке через RedirectAttributes
-            return "redirect:/categories/edit?error=categoryInUse";
+            return "redirect:" + redirect + "?error=categoryInUse";
         }
         categoryRepository.delete(category);
-        return "redirect:/categories/edit";
+        return "redirect:" + redirect;
     }
 }
