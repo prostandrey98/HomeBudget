@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Категории</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h2>Категории расходов</h2>
+    <ul class="category-list">
+        <li th:each="cat : ${categories}" class="category-item">
+            <i th:class="'fas fa-' + ${cat.icon.name}" th:title="${cat.displayName}"></i>
+            <span th:text="${cat.displayName}"></span>
+        </li>
+        <li class="category-item edit-link">
+            <a th:href="@{/categories/edit}">
+                <i class="fas fa-ellipsis-v"></i> Редактировать категории
+            </a>
+        </li>
+    </ul>
+    <a th:href="@{/future-expenses}" class="back-link">Назад к расходам</a>
+</div>
+</body>
+</html>

@@ -84,7 +84,7 @@ public class FutureExpenseController {
             @RequestParam Long categoryId,
             @RequestParam String urgency,
             @RequestParam String importance,
-            @RequestParam boolean isRecurring,
+            @RequestParam (required = false, defaultValue = "false") Boolean isRecurring,
             @RequestParam(required = false) String frequency,
             @RequestParam BigDecimal estimatedCost) {
         FutureExpense expense = new FutureExpense();
@@ -93,7 +93,7 @@ public class FutureExpenseController {
         expense.setUrgency(FutureExpense.Urgency.valueOf(urgency.toUpperCase()));
         expense.setImportance(FutureExpense.Importance.valueOf(importance.toUpperCase()));
         expense.setIsRecurring(isRecurring);
-        if (isRecurring && frequency != null) {
+        if (isRecurring && frequency != null && !frequency.isEmpty()) {
             expense.setFrequency(FutureExpense.Frequency.valueOf(frequency.toUpperCase()));
         }
         expense.setEstimatedCost(estimatedCost);

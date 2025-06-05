@@ -133,6 +133,23 @@ if (window.location.pathname === '/expenses') {
     });
 }
 
+// Обработка формы редактирования категорий (edit-categories.html)
+const iconRadios = document.querySelectorAll('.icon-option input[type="radio"]');
+// Визуальная обратная связь для выбора иконок
+if (iconRadios) {
+    iconRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const parent = radio.closest('.icon-grid');
+            if (parent) {
+                parent.querySelectorAll('.icon-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                radio.parentElement.classList.add('selected');
+            }
+        });
+    });
+}
+
 // Управление темами
 const themeToggle = document.querySelector('#theme-toggle');
 

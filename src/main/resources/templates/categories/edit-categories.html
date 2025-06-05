@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать категории</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h2>Редактировать категории</h2>
+
+    <!-- Сообщение об ошибке -->
+    <div th:if="${param.error == 'categoryInUse'}" class="error-message">
+        Нельзя удалить категорию, которая используется в расходах!
+    </div>
+
+    <!-- Форма добавления категории -->
+    <h3>Добавить новую категорию</h3>
+    <form th:action="@{/categories/add}" th:object="${newCategory}" method="post">
+        <div class="form-row">
+            <label>Название:</label>
+            <input type="text" th:field="*{displayName}" required placeholder="Введите название"/>
+        </div>
+        <div class="form-row">
+            <label>Иконка:</label>
+            <div class="icon-grid">
+                <label th:each="icon : ${icons}" class="icon-option">
+                    <input type="radio" name="iconId" th:value="${icon.id}" required/>
+                    <i th:class="'fas fa-' + ${icon.name}"></i>
+                </label>
+            </div>
+        </div>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <!-- Список категорий для редактирования/удаления -->
+    <h3>Существующие категории</h3>
+    <div th:each="cat : ${categories}" class="category-edit">
+        <form th:action="@{/categories/update/{id}(id=${cat.id})}" method="post" class="edit-form">
+            <div class="form-row">
+                <label>Название:</label>
+                <input type="text" name="displayName" th:value="${cat.displayName}" required/>
+            </div>
+            <div class="form-row">
+                <label>Иконка:</label>
+                <div class="icon-grid">
+                    <label th:each="icon : ${icons}" class="icon-option">
+                        <input type="radio" name="iconId" th:value="${icon.id}" th:checked="${cat.icon.id == icon.id}" required/>
+                        <i th:class="'fas fa-' + ${icon.name}"></i>
+                    </label>
+                </div>
+            </div>
+            <button type="submit">Сохранить</button>
+        </form>
+        <form th:action="@{/categories/delete/{id}(id=${cat.id})}" method="post" class="delete-form">
+            <button type="submit" class="delete-button">Удалить</button>
+        </form>
+    </div>
+
+    <a th:href="@{/categories}" class="back-link">Назад к списку категорий</a>
+</div>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
